@@ -73,6 +73,11 @@
     display: flex;
 }
 
+.user-card {
+    padding: 10px;
+    border: 1px solid black;
+}
+
 .menu {
     max-width: 800px;
     margin: 0 auto;
