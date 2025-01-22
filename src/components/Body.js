@@ -1,17 +1,20 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, { withPromtedLabel } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
+
 
 const Body = () => {
   // Local State Variable - Super powerful variable
   const [listOfRestaurants, setListOfRestraunt] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const RestaurantCardPromoted = withPromtedLabel(RestaurantCard);
+
 
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered");
 
   useEffect(() => {
     fetchData();
@@ -38,11 +41,13 @@ const Body = () => {
       </h1>
     );
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter flex ">
+      <div className="filter flex">
         <div className="search m-4 px-4 py-2 space-x-2">
           <input
             type="text"
@@ -53,6 +58,7 @@ const Body = () => {
             }}
           />
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               // Filter the restraunt cards and update the UI
               // searchText
@@ -69,17 +75,28 @@ const Body = () => {
           </button>
         </div>
         
-        <button
-          className="px-4 py-2 m-4 rounded-lg  bg-gray-100 hover:bg-gray-200"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setListOfRestraunt(filteredList);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
+        <div className="search m-4 p-4 flex items-center">
+          <button
+            className="px-4 py-2 m-4 rounded-lg  bg-gray-100 hover:bg-gray-200"
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter(
+                (res) => res.info.avgRating > 4
+              );
+              setListOfRestraunt(filteredList);
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
+        
+        <div className="search m-4 p-4 space-x-2 flex items-center">
+          <label>UserName  </label>
+          <input
+            className=" border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="flex flex-wrap">
@@ -88,7 +105,11 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
+            {/* {restaurant.data.promoted ? (
+              <RestaurantCardPromoted key={restaurant.info.id} resData={restaurant} />
+            ) : ( */}
           <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+        {/* )} */}
           </Link>
         ))}
       </div>
