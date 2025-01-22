@@ -6,10 +6,13 @@ import Body from "./components/Body";
 //import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
-import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
+
 //import Grocery from "./components/Grocery";
 
 // Chunking
@@ -36,12 +39,14 @@ const AppLayout = () => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-      <div className="app">
-        <Header />
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <div className="app">
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
     );
   };
 
@@ -70,11 +75,6 @@ const appRouter = createBrowserRouter([
       },
 
       {
-        path: "/cart",
-        element: <Cart />,
-      },
-
-      {
         path: "/grocery",
         element: (
           <Suspense fallback={<h1>Loading....</h1>}>
@@ -86,6 +86,11 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
+      },
+
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,
