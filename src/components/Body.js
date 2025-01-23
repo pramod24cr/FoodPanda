@@ -28,8 +28,12 @@ const Body = () => {
     const json = await data.json();
 
     // Optional Chaining
-    setListOfRestraunt(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setListOfRestraunt(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurant(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
   const onlineStatus = useOnlineStatus();
@@ -51,6 +55,7 @@ const Body = () => {
         <div className="search m-4 px-4 py-2 space-x-2">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={searchText}
             onChange={(e) => {
@@ -82,7 +87,7 @@ const Body = () => {
               const filteredList = listOfRestaurants.filter(
                 (res) => res.info.avgRating > 4
               );
-              setListOfRestraunt(filteredList);
+              setFilteredRestaurant(filteredList);
             }}
           >
             Top Rated Restaurants

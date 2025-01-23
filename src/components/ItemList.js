@@ -3,16 +3,17 @@ import { addItem } from "../utils/cartSlice";
 import { CDN_URL } from "../utils/constants";
 
 const ItemList = ({ items, dummy }) => {
-    const dispatch = useDispatch();
-    const handleAddItem = (item) => {
-        // Dispatch an action
-        dispatch(addItem(item));
-    };
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+      // Dispatch an action
+      dispatch(addItem(item));
+  };
   
   return (
     <div>
       {items.map((item) => (
         <div
+          data-testid="foodItems"
           key={item.card.info.id}
           className="p-2 m-2 border-gray-200 border-b-2 text-left flex justify-between"
         >
