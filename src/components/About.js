@@ -1,39 +1,39 @@
-import User from "./User";
 import UserClass from "./UserClass";
 import { Component } from "react";
 import UserContext from "../utils/UserContext";
 
 class About extends Component {
-  constructor(props) {
-    super(props);
-
-    //console.log("Parent Constructor");
-  }
-
-  componentDidMount() {
-    //console.log("Parent Component Did Mount");
-  }
-
   render() {
-    //console.log("Parent Render");
     return (
-      <div>
-        <h1>About Class Component</h1>
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+        {/* Page Title */}
+        <h1 className="text-4xl font-extrabold text-gray-800 mb-6">About Us</h1>
 
-        <div>
-          LoggedIn User
+        {/* Logged In User Card */}
+        {/* <div className="bg-white shadow-lg rounded-lg p-6 mb-8 w-full max-w-md">
+          <h2 className="text-lg font-semibold text-gray-600 mb-4">Logged In User</h2>
           <UserContext.Consumer>
             {({ loggedInUser }) => (
-              <h1 className="text-xl font-bold">{loggedInUser}</h1>
+              <p className="text-2xl font-bold text-blue-500">
+                {loggedInUser || "Guest"}
+              </p>
             )}
           </UserContext.Consumer>
-        </div>
+        </div> */}
 
-        <h2>This is Namaste React Web Series</h2>
-        <UserClass name={"First"} location={"Bengaluru Class"} />
+        {/* Series Info */}
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          Welcome to the <span className="text-blue-500">Namaste React</span> Web Series!
+        </h2>
+
+        {/* User Class Component */}
+        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+          <UserClass name="First" location="Bengaluru Class" />
+        </div>
       </div>
     );
   }
 }
 
 export default About;
+    

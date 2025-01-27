@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Body from "./components/Body";
-//import About from "./components/About";
+import Login from "./components/Login";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
@@ -41,9 +41,12 @@ const AppLayout = () => {
   return (
     <Provider store={appStore}>
       <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        <div className="app">
+        <div className="flex flex-col min-h-screen">
           <Header />
-          <Outlet />
+          <div className="flex-grow">
+            <Outlet />
+          </div>
+          <Footer />
         </div>
       </UserContext.Provider>
     </Provider>
@@ -91,6 +94,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
     errorElement: <Error />,

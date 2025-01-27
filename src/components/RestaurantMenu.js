@@ -5,12 +5,10 @@ import RestaurantCategory from "./RestaurantCategory";
 import { useState } from "react";
 
 const RestaurantMenu = () => {
-
   const { resId } = useParams();
   const dummy = "Dummy Data";
   const resInfo = useRestaurantMenu(resId);
   const [showIndex, setShowIndex] = useState(null);
-
 
   if (resInfo === null) return <Shimmer />;
 
@@ -26,24 +24,25 @@ const RestaurantMenu = () => {
         c.card?.["card"]?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
-  
-    //console.log(categories);
-  
+
+  const handleCategoryClick = (index) => {
+    setShowIndex(index === showIndex ? null : index); // If same index clicked, collapse it
+  };
+
   return (
-    <div className="text-center">
-      <h1 className="font-bold my-6 text-2xl">{name}</h1>
-      <p className="font-bold text-lg">
+    <div className="text-center container mx-auto px-4 py-8">
+      <h1 className="font-bold my-6 text-3xl text-gray-800">{name}</h1>
+      <p className="font-medium text-lg text-gray-600 mb-4">
         {cuisines?.join(", ")} - {costForTwoMessage}
       </p>
 
-      {/* categories accordions */}
+      {/* Categories accordions */}
       {categories.map((category, index) => (
-        // controlled component
         <RestaurantCategory
           key={category?.card?.card.title}
           data={category?.card?.card}
-          showItems={index === showIndex ? true : false}
-          setShowIndex={() => setShowIndex(index)}
+          showItems={index === showIndex}
+          setShowIndex={() => handleCategoryClick(index)}
           dummy={dummy}
         />
       ))}

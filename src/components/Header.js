@@ -1,61 +1,94 @@
 import { LOGO_URL } from "../utils/constants";
+import logo from "../utils/assets/logo.jpg";
 import { useState, useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const [btnNameReact, setBtnNameReact] = useState("Login");
   const onlineStatus = useOnlineStatus();
-  const { loggedInUser } = useContext(UserContext);
-  // console.log(loggedInUser);
 
-  // Subscribing to the store using a Selector
+   // Subscribing to the store using a Selector
   const cartItems = useSelector((store) => store.cart.items);
-  // console.log(cartItems);
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
 
   return (
-    <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
-      <div className="logo-container size-20">
-        <img className="w-56" src={LOGO_URL} />
-      </div>
-      <div className="flex items-center">
-        <ul className="flex p-4 m-4">
-          <li className="px-4">
-            Online Status: {onlineStatus ? "🟢" : "🔴"}
-          </li>
-          <li className="px-4">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/about">About Us</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/grocery">Grocery</Link>
-          </li>
-          <li className="px-4 font-bold text-xl">
-            <Link to="/cart">Cart - ({cartItems.length} items)</Link>
-          </li>
+    <header className="bg-gray-200 shadow-md">
+      <div className="container mx-auto flex flex-wrap items-center justify-between p-4 sm:p-6">
+        {/* Logo */}
+        <div className="w-32 sm:w-36 cursor-pointer transform transition-transform duration-200 hover:scale-105 active:scale-95">
+          <Link to="/">
+            <img
+              className="w-32 sm:w-36 cursor-pointer"
+              src={logo}
+              alt="Application Logo"
+              loading="lazy"
+            />
+          </Link>
+        </div>
 
-          <button
-            className="login px-4"
-            onClick={() => {
-              btnNameReact === "Login"
-                ? setBtnNameReact("Logout")
-                : setBtnNameReact("Login");
-            }}
+        {/* Navigation Links */}
+        <nav className="hidden sm:flex space-x-6 text-gray-700 text-base sm:text-lg">
+          <Link
+            className="hover:text-green-600 font-medium transition-all flex items-center space-x-1"
+            to="/"
           >
-            {btnNameReact}
-          </button>
+            <span role="img" aria-label="home">
+              🏠
+            </span>
+            <span>Home</span>
+          </Link>
+        </nav>
 
-          <li className="px-4 font-bold">{loggedInUser}</li>
-        </ul>
+        {/* Actions: Cart, Online Status, and Login */}
+        <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">
+          {/* Online Status */}
+          <div className="text-sm sm:text-base font-medium text-gray-800">
+            {onlineStatus ? (
+              <span className="flex items-center space-x-1">
+                <span role="img" aria-label="online">
+                  🟢
+                </span>
+                <span>Online</span>
+              </span>
+            ) : (
+              <span className="flex items-center space-x-1">
+                <span role="img" aria-label="offline">
+                  🔴
+                </span>
+                <span>Offline</span>
+              </span>
+            )}
+          </div>
+
+          {/* Cart */}
+          <div className="text-sm sm:text-base font-medium">
+            <Link
+              to="/cart"
+              className="flex items-center hover:text-green-600 transition-all"
+            >
+              <span role="img" aria-label="cart">
+                🛒
+              </span>
+              <span>Cart ({cartItems.length})</span>
+            </Link>
+          </div>
+
+          {/* Login Button */}
+          <button
+            className="bg-black text-white px-4 py-2 rounded-lg font-medium transform transition-transform duration-200 hover:scale-105 active:scale-95"
+            onClick={handleLoginClick} // Navigate directly to the login page
+          >
+            Login
+          </button>
+        </div>
       </div>
-    </div>
+    </header>
   );
 };
 
