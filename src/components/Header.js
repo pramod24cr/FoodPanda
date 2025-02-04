@@ -1,5 +1,5 @@
 import { LOGO_URL } from "../utils/constants";
-// import logo from "../utils/assets/logo.jpg";
+import logo from "../utils/assets/logo.jpg";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -17,7 +17,7 @@ const Header = () => {
     navigate("/login");
   };
 
-  const logo = "/assets/logo.jpg"; 
+  // const logo = "/assets/logo.jpg";
 
   return (
     <header className="bg-gray-200 shadow-md">
@@ -35,7 +35,7 @@ const Header = () => {
         </div>
 
         {/* Navigation Links */}
-        <nav className="hidden sm:flex space-x-6 text-gray-700 text-base sm:text-lg">
+        {/* <nav className="hidden sm:flex space-x-6 text-gray-700 text-base sm:text-lg">
           <Link
             className="hover:text-green-600 font-medium transition-all flex items-center space-x-1"
             to="/"
@@ -45,7 +45,7 @@ const Header = () => {
             </span>
             <span>Home</span>
           </Link>
-        </nav>
+        </nav> */}
 
         {/* Actions: Cart, Online Status, and Login */}
         <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">
@@ -82,12 +82,12 @@ const Header = () => {
           </div>
 
           {/* Login Button */}
-          <button
+          {/* <button
             className="bg-black text-white px-4 py-2 rounded-lg font-medium transform transition-transform duration-200 hover:scale-105 active:scale-95"
             onClick={handleLoginClick} // Navigate directly to the login page
           >
             Login
-          </button>
+          </button> */}
         </div>
       </div>
     </header>
