@@ -1,5 +1,5 @@
 import { LOGO_URL } from "../utils/constants";
-import logo from "../utils/assets/logo.jpg";
+// import logo from "../utils/assets/logo.jpg";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -16,6 +16,8 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate("/login");
   };
+
+  const logo = "/assets/logo.jpg"; 
 
   return (
     <header className="bg-gray-200 shadow-md">
