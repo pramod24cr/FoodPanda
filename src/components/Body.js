@@ -22,7 +22,7 @@ const Body = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9846783&lng=77.7328004&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://swiggy-proxy.pramod24cr.workers.dev?type=restaurants"
     );
     const json = await data.json();
     setListOfRestraunt(
